@@ -1,0 +1,44 @@
+services:
+    db:
+        image: postgres
+        container_name: uposdb
+        restart: always
+        environment:
+            TZ: ${TZ}
+            POSTGRES_DB: ${DB_NAME}
+            POSTGRES_PASSWORD: ${DB_PASS}
+        ports:
+            - "5433:5432"
+        volumes:
+          - uposdb_data:/var/lib/postgresql/data
+
+    api:
+        build: .
+        container_name: uposapi
+        volumes:
+            - ./uploads:/usr/src/app/uploads
+            - ./logs:/root/.pm2/logs
+        environment:
+            - TZ=${TZ}
+            - APP_URL=${APP_URL}
+            - APP_PORT=${APP_PORT}
+            - FRONT_URL=${FRONT_URL}
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=${DB_PORT}
+            - DB_USER=${DB_USER}
+            - DB_PASS=${DB_PASS}
+            - DB_NAME=${DB_NAME}
+            - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+            - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+            - PST_SANDBOX=${PST_SANDBOX}
+            - PST_MERCHANTID=${PST_MERCHANTID}
+            - PST_AUTHKEY=${PST_AUTHKEY}
+            - PST_EMAIL=${PST_EMAIL}
+        ports:
+            - "${APP_PORT}:${APP_PORT}"
+        depends_on:
+            - db
+        # command: npm run start:prod
+
+volumes:
+    uposdb_data:

@@ -1,0 +1,11 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+dist
+# uploads/*
+# !uploads/static
+.git
+.github
+out.log
+error.log
