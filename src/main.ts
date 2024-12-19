@@ -22,7 +22,7 @@ async function bootstrap() {
   app.enableCors();
 
   const config = new DocumentBuilder()
-    .setTitle('UPOS API')
+    .setTitle('KMITL API')
     // .setDescription('The cats API description')
     .setVersion('1.0')
     // .addTag('cats')
