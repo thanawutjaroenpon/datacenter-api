@@ -37,6 +37,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 // import { DashboardModule } from './dashboard/dashboard.module';
 // import { BoardModule } from './board/board.module';
 // import { TaskGateway } from './board/task.gateway';
+import { Test2Module } from './test2/test2.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
     }),
     ScheduleModule.forRoot(),
+    Test2Module,
 
   ],
   controllers: [AppController],
