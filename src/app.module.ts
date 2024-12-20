@@ -9,11 +9,13 @@ import { join } from 'path';
 import { ScheduleModule } from '@nestjs/schedule';
 import { Test2Module } from './test2/test2.module';
 import { StudentModule } from './student/student.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '.env',
       load: [typeorm]
     }),
     ServeStaticModule.forRoot({
@@ -27,6 +29,7 @@ import { StudentModule } from './student/student.module';
     ScheduleModule.forRoot(),
     Test2Module,
     StudentModule,
+    AuthModule,
 
   ],
   controllers: [AppController],
