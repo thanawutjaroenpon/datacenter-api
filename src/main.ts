@@ -16,6 +16,11 @@ async function bootstrap() {
   
   app.useGlobalPipes(new ValidationPipe());
 
+  app.use((req, res, next) => {
+    //console.log('Incoming Headers:', req.headers);
+    next();
+  });
+
   // const httpAdapterHost  = app.get(HttpAdapterHost);
   // app.useGlobalFilters(new AllExceptionsFilter(httpAdapterHost));
 
@@ -29,7 +34,14 @@ async function bootstrap() {
     // .setDescription('The cats API description')
     .setVersion('1.0')
     // .addTag('cats')
-    .addBearerAuth()
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
