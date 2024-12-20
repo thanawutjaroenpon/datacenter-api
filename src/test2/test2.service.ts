@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateTest2Dto } from './dto/create-test2.dto';
 import { UpdateTest2Dto } from './dto/update-test2.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,11 +15,9 @@ export class Test2Service {
     const kuyts = this.test2Repository.create(createTest2Dto)
     return this.test2Repository.save(kuyts)
   }
-
   findAll() {
-    return `This action returns all test2`;
+    throw new BadRequestException('Lol error ไอสัส');
   }
-
   findOne(id: number) {
     return `This action returns a #${id} test2`;
   }
