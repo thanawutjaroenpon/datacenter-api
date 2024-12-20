@@ -15,9 +15,10 @@ export class AuthService {
 
     if (password === 'admin') {
       const user = { username: username };
-      return this.jwtService.sign(user);
+      const token = this.jwtService.sign(user);
+      //console.log('Generated Token:', token);
+      return token;
     }
-
     throw new Error('Invalid credentials');
   }
 

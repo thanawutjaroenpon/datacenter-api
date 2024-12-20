@@ -3,8 +3,9 @@ import { AuthPayloadDto } from './dto/create-auth.dto';
 import { AuthService } from './auth.service';
 import { Request } from 'express';
 import { JwtAuthGuard } from './guards/jwt.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth('access-token')
 @Controller('auth')
 @ApiTags('Authorize')
 export class AuthController {
