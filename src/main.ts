@@ -19,7 +19,10 @@ async function bootstrap() {
   // const httpAdapterHost  = app.get(HttpAdapterHost);
   // app.useGlobalFilters(new AllExceptionsFilter(httpAdapterHost));
 
-  app.enableCors();
+  app.enableCors({
+    allowedHeaders: ['Authorization', 'Content-Type', 'Accept'],
+    origin: '*',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('KMITL API')
