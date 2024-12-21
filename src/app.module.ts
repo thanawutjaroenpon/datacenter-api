@@ -10,6 +10,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { Test2Module } from './test2/test2.module';
 import { StudentModule } from './student/student.module';
 import { AuthModule } from './auth/auth.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from './auth/auth.module';
     Test2Module,
     StudentModule,
     AuthModule,
+    TeacherModule,
 
   ],
   controllers: [AppController],
