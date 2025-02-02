@@ -11,6 +11,8 @@ import { Test2Module } from './test2/test2.module';
 import { StudentModule } from './student/student.module';
 import { AuthModule } from './auth/auth.module';
 import { TeacherModule } from './teacher/teacher.module';
+import { BeaconLogModule } from './beacon_log/beacon_log.module';
+import { RoomStatusModule } from './room_status/room_status.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { TeacherModule } from './teacher/teacher.module';
     StudentModule,
     AuthModule,
     TeacherModule,
+    BeaconLogModule,
+    RoomStatusModule,
 
   ],
   controllers: [AppController],
