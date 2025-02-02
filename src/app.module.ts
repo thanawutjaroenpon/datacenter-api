@@ -12,6 +12,7 @@ import { StudentModule } from './student/student.module';
 import { AuthModule } from './auth/auth.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { PersonModule } from './person/person.module';
+import { UserInfoModule } from './user_info/user_info.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { PersonModule } from './person/person.module';
     AuthModule,
     TeacherModule,
     PersonModule,
+    UserInfoModule,
 
   ],
   controllers: [AppController],
