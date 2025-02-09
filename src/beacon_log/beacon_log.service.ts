@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBeaconLogDto } from './dto/create-beacon_log.dto';
 import { UpdateBeaconLogDto } from './dto/update-beacon_log.dto';
+import { BeaconLog } from './entities/beacon_log.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BeaconLogService {
-  create(createBeaconLogDto: CreateBeaconLogDto) {
-    return 'This action adds a new beaconLog';
+
+  constructor(
+    @InjectRepository(BeaconLog)
+    private beaconLogRepository: Repository<BeaconLog>,
+  ) {}
+
+  async create(createBeaconLogDto: CreateBeaconLogDto): Promise<BeaconLog> {
+    return await this.beaconLogRepository.save(createBeaconLogDto);
   }
 
-  findAll() {
-    return `This action returns all beaconLog`;
+  async GetBeaconLog(): Promise<BeaconLog[]> {
+    return await this.beaconLogRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} beaconLog`;
+  async GetRooms(): Promise<Partial<BeaconLog>[]> {
+    return await this.beaconLogRepository.find({
+      select: ['Room_ID', 'in_room', 'out_room'],
+    });
   }
 
-  update(id: number, updateBeaconLogDto: UpdateBeaconLogDto) {
-    return `This action updates a #${id} beaconLog`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} beaconLog`;
-  }
+  async 
 }
