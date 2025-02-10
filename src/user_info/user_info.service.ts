@@ -30,7 +30,13 @@ export class UserInfoService {
   async findAll() {
     return await this.userInfoRepository.find();
   }
-  
+  async findAllById(id: number) {
+    const userInfo = await this.userInfoRepository.findOne({ where: { id } });
+    if (!userInfo) {
+      throw new NotFoundException(`UserInfo with ID #${id} not found`);
+    }
+    return userInfo;
+  }
   async findByStudentId(student_id: string) {
     const userInfo = await this.userInfoRepository.findOne({
       where: { student_id },
@@ -67,5 +73,34 @@ export class UserInfoService {
     }
     return this.userInfoRepository.remove(userInfo);
   }
+
+  async finduser(student_id: string){
+    const user = await this.userInfoRepository.find({
+      where: {student_id : student_id},
+      select: ['id','first_name','last_name']});
+    if (!user) {
+      throw new NotFoundException(`User with Student ID #${student_id} not found`);
+    }
+    return user;
+  }
+
+  async updateByStudent_id(student_id: string, updateUserInfoDto: UpdateUserInfoDto) {
+    const userInfo = await this.userInfoRepository.findOne({ where: { student_id } });
+    if (!userInfo) {
+      throw new NotFoundException(`UserInfo with ID #${student_id} not found`);
+    }
+    if(updateUserInfoDto.student_id && updateUserInfoDto.student_id !== userInfo.student_id){
+      const existingUserstudent_id = await this.userInfoRepository.findOne({
+        where: {  student_id: updateUserInfoDto.student_id },
+      });
+      if (existingUserstudent_id) {
+        throw new NotFoundException(`UserInfo with Student ID #${updateUserInfoDto.student_id} already exists`);
+      }
+    }
+    await this.userInfoRepository.update(student_id, updateUserInfoDto);
+
+    return this.userInfoRepository.findOne({ where: { student_id } });
+  }
+
  
 }
