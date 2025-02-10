@@ -35,7 +35,7 @@ describe('RoomStatusController', () => {
     it('should return all room statuses', async () => {
       const mockRooms: RoomStatus[] = [
         { Room_Status_ID: 1, Room_ID: 'A101', room_status: true, item_status: false, beacon: [] },
-        { Room_Status_ID: 2, Room_ID: 'B202', room_status: false, item_status: true, beacon: [] },
+        { Room_Status_ID: 2, Room_ID: 'B312', room_status: false, item_status: true, beacon: [] },
       ];
 
       mockRoomStatusService.GetAllRoomsStatus.mockResolvedValue(mockRooms);
@@ -49,8 +49,8 @@ describe('RoomStatusController', () => {
   describe('GetMember', () => {
     it('should return members in a room', async () => {
       const mockMembers = [
-        { firstname: 'John', lastname: 'Doe', code: '12345' },
-        { firstname: 'Jane', lastname: 'Smith', code: '67890' },
+        { firstname: 'Kottaboung', lastname: 'Nanvong', code: '64200002' },
+        { firstname: 'main', lastname: 'main', code: '64200003' },
       ];
 
       mockRoomStatusService.GetMemberInRoom.mockResolvedValue(mockMembers);
