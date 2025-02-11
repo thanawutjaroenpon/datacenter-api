@@ -1,14 +1,15 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+
 @Entity()
 export class UserInfo {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 13 })
+  @Column({ length: 13, unique: true})
   id_card: string;
 
-  @Column({ length: 8 })
+  @Column({ length: 8, unique: true })
   student_id: string;
 
   @Column({ length: 50 })
@@ -38,8 +39,8 @@ export class UserInfo {
   @Column({ length: 10 })
   teleiphone: string;
 
-  @Column({ length: 6 })
-  d_mm_y: string;
+  @Column({ type: 'date' })
+  date_of_birth: Date;
 
   @Column({ length: 5 })
   blood_group: string;
