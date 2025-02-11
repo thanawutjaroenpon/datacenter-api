@@ -3,7 +3,7 @@ import { RoomStatusService } from './room_status.service';
 import { CreateRoomStatusDto } from './dto/create-room_status.dto';
 import { UpdateRoomStatusDto } from './dto/update-room_status.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
