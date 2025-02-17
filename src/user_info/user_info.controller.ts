@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Param, Delete, Body, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Param, Delete, Body, UseGuards, Put, Req } from '@nestjs/common';
 import { UserInfoService } from './user_info.service';
 import { CreateUserInfoDto } from './dto/create-user_info.dto';
 import { UpdateUserInfoDto } from './dto/update-user_info.dto';
@@ -23,16 +23,24 @@ export class UserInfoController {
   findAll() {
     return this.userInfoService.findAll();
   }
+  @Get('id_card')
+  findbycardid(@Param('id_card') id_card:string){
+    return this.userInfoService.findbycardid(id_card);
+  }
   @Get (':id')
-  findOne(@Param('id') id: number) {
-    return this.userInfoService.findOne(id);
+  findOne(@Param('id') id: number,@Req() request) {
+    const currentUser = request.user
+    console.log(currentUser.role)
+    // return this.userInfoService.findOne(id);
     }
   @Get(':student_id')
   findByStudentId(@Param('student_id') student_id: string) {
     return this.userInfoService.findByStudentId(student_id);
   }
   @Get(':user')//New add 
-  finduser(@Param('student_id') student_id: string) {
+  finduser(
+    @Param('student_id') student_id: string,
+  ) {
     return this.userInfoService.finduser(student_id);
   }
   @Get(':user/id')//New add

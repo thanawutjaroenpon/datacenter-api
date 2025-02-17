@@ -20,7 +20,7 @@ import { UserInfo } from '../user_info/entities/user_info.entity';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_ACCESS_SECRET'),
-        signOptions: { expiresIn: '1h' },
+        signOptions: { expiresIn: '1y' },
       }),
     }),
     TypeOrmModule.forFeature([Auth,UserInfo])
