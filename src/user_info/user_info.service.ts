@@ -26,6 +26,12 @@ export class UserInfoService {
     }
     return UserInfo;
   }
+  async findbycardid(id_card:string){
+    const Card_id = await this.userInfoRepository.findOne({
+      where:{id_card:id_card}
+    })
+    return Card_id
+  }
 
   async findAll() {
     return await this.userInfoRepository.find();
@@ -75,7 +81,7 @@ export class UserInfoService {
   }
 
   async finduser(student_id: string){
-    const user = await this.userInfoRepository.find({
+    const user = await this.userInfoRepository.findOne({
       where: {student_id : student_id},
       select: ['id','first_name','last_name']});
     if (!user) {
