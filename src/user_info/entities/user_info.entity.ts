@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Auth } from "src/auth/entities/auth.entity";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -56,5 +57,9 @@ export class UserInfo {
 
   @Column({ length: 255, nullable:true })
   photograph: string; // File path
+
+
+  @OneToOne(() => Auth, auth => auth.userInfo)
+  auth: Auth; // Relation back to Auth
 }
 
