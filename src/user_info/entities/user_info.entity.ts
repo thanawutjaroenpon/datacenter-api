@@ -39,7 +39,7 @@ export class UserInfo {
   @Column({ length: 10 })
   teleiphone: string;
 
-  @Column({ type: 'date' })
+  @Column()
   date_of_birth: Date;
 
   @Column({ length: 5 })
@@ -54,7 +54,7 @@ export class UserInfo {
   @Column({ length: 10 })
   guardian_phone: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable:true })
   photograph: string; // File path
 }
 
