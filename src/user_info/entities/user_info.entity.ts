@@ -39,7 +39,7 @@ export class UserInfo {
   @Column({ length: 10 })
   teleiphone: string;
 
-  @Column()
+  @Column({nullable:true})
   date_of_birth: Date;
 
   @Column({ length: 5 })
