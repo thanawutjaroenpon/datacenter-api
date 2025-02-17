@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 export class CreateUserInfoDto {
     
     @IsNotEmpty({ message: 'id_card cannot be empty' })
@@ -56,10 +56,9 @@ export class CreateUserInfoDto {
     
     teleiphone: string;
 
-    @IsNotEmpty({ message: 'd_mm_y cannot be empty' })
-    @IsString({ message: 'd_mm_y must be a string' })
-
-    d_mm_y: string;
+    @IsNotEmpty({ message: 'date_of_birth cannot be empty' })
+    @IsDateString({}, { message: 'date_of_birth must be a valid date string' })
+    date_of_birth: string;
 
     @IsNotEmpty({ message: 'blood_group cannot be empty' })
     @IsString({ message: 'blood_group must be a string' })

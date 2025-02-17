@@ -4,10 +4,10 @@ import { UpdateRoomLogDto } from './dto/update-room_log.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoomLog } from './entities/room_log.entity';
 import { Repository } from 'typeorm';
-import { UserInfo } from 'src/user_info/entities/user_info.entity';
-import { RoomStatus } from 'src/room_status/entities/room_status.entity';
-import { BeaconLog } from 'src/beacon_log/entities/beacon_log.entity';
-import { Student } from 'src/student/entities/student.entity';
+import { UserInfo } from '../user_info/entities/user_info.entity';
+import { RoomStatus } from '../room_status/entities/room_status.entity';
+import { BeaconLog } from '../beacon_log/entities/beacon_log.entity';
+import { Student } from '../student/entities/student.entity';
 
 @Injectable()
 export class RoomLogService {

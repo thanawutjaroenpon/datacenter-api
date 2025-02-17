@@ -24,12 +24,24 @@ export class UserInfoController {
     return this.userInfoService.findAll();
   }
   @Get (':id')
-  findOne(@Param('id') id: string) {
-    return this.userInfoService.findByStudentId(id);
+  findOne(@Param('id') id: number) {
+    return this.userInfoService.findOne(id);
     }
   @Get(':student_id')
   findByStudentId(@Param('student_id') student_id: string) {
     return this.userInfoService.findByStudentId(student_id);
+  }
+  @Get(':user')//New add 
+  finduser(@Param('student_id') student_id: string) {
+    return this.userInfoService.finduser(student_id);
+  }
+  @Get(':user/id')//New add
+  findallById(@Param('id') id: number) {
+    return this.userInfoService.findAllById(id);
+  }
+  @Put(':user')//New add
+  updateByStudent_id(@Param('student_id') student_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
+    return this.userInfoService.update(+student_id, updateUserInfoDto);
   }
 
   @Put(':id')

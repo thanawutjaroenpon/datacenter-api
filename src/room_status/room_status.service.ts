@@ -4,8 +4,8 @@ import { UpdateRoomStatusDto } from './dto/update-room_status.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoomStatus } from './entities/room_status.entity';
 import { In, Not, LessThan, Repository } from 'typeorm';
-import { UserInfo } from 'src/user_info/entities/user_info.entity';
-import { RoomLog, Status } from 'src/room_log/entities/room_log.entity';
+import { UserInfo } from '../user_info/entities/user_info.entity';
+import { RoomLog, Status } from '../room_log/entities/room_log.entity';
 
 @Injectable()
 export class RoomStatusService {
