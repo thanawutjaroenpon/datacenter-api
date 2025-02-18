@@ -58,6 +58,11 @@ export class UserInfo {
   @Column({ length: 255, nullable:true })
   photograph: string; // File path
 
+  @Column({nullable:true})
+  nfc_id:string
+  @Column({nullable:true})
+  pin:string
+
 
   @OneToOne(() => Auth, auth => auth.userInfo)
   auth: Auth; // Relation back to Auth
