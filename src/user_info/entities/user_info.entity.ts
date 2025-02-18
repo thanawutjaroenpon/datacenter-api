@@ -1,13 +1,18 @@
+import { IsEnum } from "class-validator";
 import { Auth } from "src/auth/entities/auth.entity";
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-
+export enum Position {
+  Student = 'Student',
+  Teacher = 'Teacher',
+  Admin = 'Admin'
+}
 @Entity()
 export class UserInfo {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 13, unique: true})
+  @Column({ length: 13, unique: true })
   id_card: string;
 
   @Column({ length: 8, unique: true })
@@ -35,12 +40,9 @@ export class UserInfo {
   line_id: string;
 
   @Column({ length: 10 })
-  position: string;
-
-  @Column({ length: 10 })
   teleiphone: string;
 
-  @Column({nullable:true})
+  @Column({ nullable: true })
   date_of_birth: Date;
 
   @Column({ length: 5 })
@@ -55,13 +57,17 @@ export class UserInfo {
   @Column({ length: 10 })
   guardian_phone: string;
 
-  @Column({ length: 255, nullable:true })
+  @Column({ length: 255, nullable: true })
   photograph: string; // File path
 
-  @Column({nullable:true})
-  nfc_id:string
-  @Column({nullable:true})
-  pin:string
+  @Column({ nullable: true })
+  nfc_id: string
+  @Column({ nullable: true })
+  pin: string
+
+  @Column({ default:Position.Student })
+  @IsEnum(Position)
+  Position: Position;
 
 
   @OneToOne(() => Auth, auth => auth.userInfo)
