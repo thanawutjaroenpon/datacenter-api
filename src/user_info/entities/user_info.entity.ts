@@ -65,7 +65,7 @@ export class UserInfo {
   @Column({ nullable: true })
   pin: string
 
-  @Column({ nullable: false })
+  @Column({ default:Position.Student })
   @IsEnum(Position)
   Position: Position;
 
