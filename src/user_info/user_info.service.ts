@@ -45,7 +45,7 @@ export class UserInfoService {
   }
   async findByStudentId(student_id: string) {
     const userInfo = await this.userInfoRepository.findOne({
-      where: { student_id },
+      where: { student_id},
     });
     if (!userInfo) {
       throw new NotFoundException(`UserInfo with Student ID #${student_id} not found`);
@@ -80,13 +80,20 @@ export class UserInfoService {
     return this.userInfoRepository.remove(userInfo);
   }
 
-  async finduser(student_id: string){
+  async finduser(student_id: string) {
+    console.log(`Searching for student_id: ${student_id}`); // Incoming param check
+  
     const user = await this.userInfoRepository.findOne({
-      where: {student_id : student_id},
-      select: ['id','first_name','last_name']});
+      where: { student_id: student_id },
+      select: ['id', 'first_name', 'last_name'],
+    });
+  
+    console.log('Database query result:', user); // Database response check
+  
     if (!user) {
       throw new NotFoundException(`User with Student ID #${student_id} not found`);
     }
+  
     return user;
   }
 
