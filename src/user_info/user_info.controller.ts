@@ -5,6 +5,8 @@ import { UpdateUserInfoDto } from './dto/update-user_info.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { get } from 'lodash';
+import { request } from 'http';
+import { InjectRepository } from '@nestjs/typeorm';
 
 
 @ApiBearerAuth('access-token')
@@ -12,7 +14,9 @@ import { get } from 'lodash';
 @Controller('user_info')
 @ApiTags('User_Info')
 export class UserInfoController {
-  constructor(private readonly userInfoService: UserInfoService) {}
+  constructor(
+    private readonly userInfoService: UserInfoService,
+  ) {}
 
   @Post()
   create(@Body() createUserInfoDto: CreateUserInfoDto) {
@@ -27,12 +31,19 @@ export class UserInfoController {
   findbycardid(@Param('id_card') id_card:string){
     return this.userInfoService.findbycardid(id_card);
   }
+  @Get('profile')
+  getbycardUser(@Req() request){
+    const currentUser = request.user.username
+    return this.userInfoService.Getprofile(currentUser)
+  }
   @Get (':id')
   findOne(@Param('id') id: number,@Req() request) {
     const currentUser = request.user
     console.log(currentUser.role)
     // return this.userInfoService.findOne(id);
     }
+  
+  
   @Get(':student_id')
   findByStudentId(@Param('student_id') student_id: string) {
     return this.userInfoService.findByStudentId(student_id);
@@ -60,4 +71,5 @@ export class UserInfoController {
   remove(@Param('id') id: string) {
     return this.userInfoService.remove(+id);
   }
+
 }

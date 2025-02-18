@@ -4,12 +4,15 @@ import { UpdateUserInfoDto } from './dto/update-user_info.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserInfo } from './entities/user_info.entity';
 import { Repository } from 'typeorm';
+import { Auth } from '../auth/entities/auth.entity';
 
 @Injectable()
 export class UserInfoService {
   constructor(
     @InjectRepository(UserInfo)
     private userInfoRepository: Repository<UserInfo>,
+    @InjectRepository(Auth)
+    private authRepository: Repository<Auth>
   ) {}
   
   async create(createUserInfoDto: CreateUserInfoDto) {
@@ -108,5 +111,12 @@ export class UserInfoService {
     return this.userInfoRepository.findOne({ where: { student_id } });
   }
 
+
+  async Getprofile(currentUser:string){
+  const user = currentUser
+  const user2 = await this.authRepository.findOne({where:{username:user}})
+  const profile = await this.userInfoRepository.findOne({where:{id_card:user2.id_card}})
+  return profile
+  }
  
 }
