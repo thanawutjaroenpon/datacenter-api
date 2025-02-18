@@ -15,9 +15,15 @@ export class UserInfoService {
     private authRepository: Repository<Auth>
   ) {}
   
-  async create(createUserInfoDto: CreateUserInfoDto) {
+  async create(createUserInfoDto: CreateUserInfoDto , currentUser:string) {
     const userInfo = await this.userInfoRepository.create(createUserInfoDto)
-    return this.userInfoRepository.save(userInfo)
+    const userdoc = await this.userInfoRepository.save(userInfo)
+    const findid_card = await this.authRepository.findOne({where:{username:currentUser}})
+    console.log(findid_card)
+    const sendid_card = await this.authRepository.update(findid_card.id,{id_card:createUserInfoDto.id_card})
+  
+    return { userInfo: userdoc, auth: sendid_card };
+
   }
 
   async findOne(id: number) {
@@ -88,7 +94,7 @@ export class UserInfoService {
   
     const user = await this.userInfoRepository.findOne({
       where: { student_id: student_id },
-      select: ['id', 'first_name', 'last_name'],
+      select: ['id_card', 'first_name', 'last_name','Position','student_id'],
     });
   
     console.log('Database query result:', user); // Database response check
