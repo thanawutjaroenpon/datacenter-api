@@ -20,7 +20,7 @@ export class RoomLog {
     @Column()
     Time: Date;
 
-    @Column()
+    @Column({nullable:true})
     @IsEnum(Status)
     Status: Status;
 
