@@ -17,6 +17,7 @@ import { BeaconLogModule } from './beacon_log/beacon_log.module';
 import { RoomStatusModule } from './room_status/room_status.module';
 import { RoomLogModule } from './room_log/room_log.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -42,6 +43,7 @@ import { RoomLogModule } from './room_log/room_log.module';
     BeaconLogModule,
     RoomStatusModule,
     RoomLogModule,
+
 
   ],
   controllers: [AppController],
