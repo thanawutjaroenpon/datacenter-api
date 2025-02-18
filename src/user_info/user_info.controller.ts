@@ -37,19 +37,25 @@ export class UserInfoController {
   findByStudentId(@Param('student_id') student_id: string) {
     return this.userInfoService.findByStudentId(student_id);
   }
+  /*
   @Get(':user')//New add 
-  finduser(
-    @Param('student_id') student_id: string,
-  ) {
+  finduser(@Param('student_id') student_id: string,) {
     return this.userInfoService.finduser(student_id);
-  }
-  @Get(':user/id')//New add
+  }*/
+    @Get('user/:user')
+    async finduser(@Param('user') student_id: string) {
+      console.log('Searching for student_id:', student_id); // Show passed param
+      const user = await this.userInfoService.finduser(student_id);
+      console.log('Found user:', user); // Show returned object
+      return user;
+    }
+  @Get('id/:user')//New add
   findallById(@Param('id') id: number) {
     return this.userInfoService.findAllById(id);
   }
   @Put(':user')//New add
   updateByStudent_id(@Param('student_id') student_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
-    return this.userInfoService.update(+student_id, updateUserInfoDto);
+    return this.userInfoService.updateByStudent_id(student_id, updateUserInfoDto);
   }
 
   @Put(':id')
