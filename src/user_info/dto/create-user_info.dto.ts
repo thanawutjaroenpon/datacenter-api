@@ -1,4 +1,5 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { Position } from '../entities/user_info.entity';
 export class CreateUserInfoDto {
     
     @IsNotEmpty({ message: 'id_card cannot be empty' })
@@ -46,10 +47,9 @@ export class CreateUserInfoDto {
 
     line_id: string;
 
-    @IsNotEmpty({ message: 'facebook cannot be empty' })
-    @IsString({ message: 'facebook must be a string' })
-
-    position: string;
+    @IsNotEmpty({ message: 'position cannot be empty' })
+    @IsEnum(Position, { message: 'position must be a valid enum value' })
+    Position: Position;
 
     @IsNotEmpty({ message: 'tel cannot be empty' })
     @IsString({ message: 'tel must be a string' })

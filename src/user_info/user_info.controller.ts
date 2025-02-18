@@ -19,8 +19,8 @@ export class UserInfoController {
   ) {}
 
   @Post()
-  create(@Body() createUserInfoDto: CreateUserInfoDto) {
-    return this.userInfoService.create(createUserInfoDto);
+  create(@Body() createUserInfoDto: CreateUserInfoDto ,@Req() request) {
+    return this.userInfoService.create(createUserInfoDto,request.user.username);
   }
 
   @Get()
