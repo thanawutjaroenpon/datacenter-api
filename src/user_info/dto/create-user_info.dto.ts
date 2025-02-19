@@ -79,4 +79,8 @@ export class CreateUserInfoDto {
     @IsString({ message: 'guardian_phone must be a string' })
 
     guardian_phone: string;
+    
+    @IsNotEmpty()
+    @IsString()
+    photograph: string;
 }

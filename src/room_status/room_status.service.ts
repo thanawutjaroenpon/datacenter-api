@@ -66,6 +66,19 @@ export class RoomStatusService {
     return result;
 }
 
+async updateRoomStatus(room_ID: string, status: boolean) {
+  const room = await this.roomStatusRepository.findOne({ where: { Room_ID: room_ID } });
+
+  if (!room) {
+      return `Room ${room_ID} not found`;
+  }
+  
+  room.room_status = status;
+  await this.roomStatusRepository.save(room);
+
+  return `Room ${room_ID} status updated to ${status}`;
+}
+
   
 
 }
