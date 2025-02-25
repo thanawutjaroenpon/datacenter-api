@@ -10,10 +10,10 @@ export class RoomStatus {
     @PrimaryColumn({ length: 50 })
     Room_ID: string;
 
-    @Column()
+    @Column({nullable:true})
     room_status: boolean; 
 
-    @Column()
+    @Column({nullable:true})
     item_status: boolean;
 
     @OneToMany(() => BeaconLog, (beacon) => beacon.room)
