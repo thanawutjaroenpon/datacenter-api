@@ -120,10 +120,13 @@ export class UserInfoService {
       }
     }
   
-    await this.userInfoRepository.update({ id_card }, updateUserInfoDto);
+    // Merge changes into the existing entity
+    Object.assign(userInfo, updateUserInfoDto);
   
-    return this.userInfoRepository.findOne({ where: { id_card } });
+    // Save updated entity (handles relations & validation correctly)
+    return await this.userInfoRepository.save(userInfo);
   }
+  
   
 
 
