@@ -60,8 +60,8 @@ export class UserInfo {
   @Column({ length: 10 })
   guardian_phone: string;
 
-  @Column({ length: 255, nullable: true })
-  photograph: string; // File path
+  @Column({ nullable: true })
+  photograph: string; // base64
 
   @Column({ nullable: true })
   nfc_id: string

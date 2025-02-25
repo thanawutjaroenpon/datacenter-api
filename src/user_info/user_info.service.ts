@@ -19,7 +19,6 @@ export class UserInfoService {
     const userInfo = await this.userInfoRepository.create(createUserInfoDto)
     const userdoc = await this.userInfoRepository.save(userInfo)
     const findid_card = await this.authRepository.findOne({where:{username:currentUser}})
-    console.log(findid_card)
     const sendid_card = await this.authRepository.update(findid_card.id,{id_card:createUserInfoDto.id_card})
   
     return { userInfo: userdoc, auth: sendid_card };
@@ -126,6 +125,9 @@ export class UserInfoService {
 
 
   async Getprofile(currentUser:string){
+  if(!currentUser){
+    throw new NotFoundException("DATA_NOTFOUND")
+  }
   const user = currentUser
   const user2 = await this.authRepository.findOne({where:{username:user}})
   const profile = await this.userInfoRepository.findOne({where:{id_card:user2.id_card}})
