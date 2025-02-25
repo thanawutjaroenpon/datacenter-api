@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserInfoDto } from './dto/create-user_info.dto';
 import { UpdateUserInfoDto } from './dto/update-user_info.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -111,8 +111,9 @@ export class UserInfoService {
 
     const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
     if (!userInfo) {
-        throw new NotFoundException(`UserInfo with ID #${id_card} not found`);
+        throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
     }
+
     
  
     const { id_card: excludedId, ...updateData } = updateUserInfoDto;
@@ -122,6 +123,7 @@ export class UserInfoService {
     const updatedUserInfo = await this.userInfoRepository.save(userInfo);
   
     return updatedUserInfo;
+
 }
 
   
