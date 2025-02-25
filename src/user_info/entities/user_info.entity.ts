@@ -35,7 +35,7 @@ export class UserInfo {
 
   @Column({ length: 100 })
   user_line_id: string;
-  
+
   @Column({ length: 32 })
   token_id: string;
 
@@ -68,7 +68,7 @@ export class UserInfo {
   @Column({ nullable: true })
   pin: string
 
-  @Column({ nullable: false })
+  @Column({ default: position.Student })
   @IsEnum(position)
   position: position;
 
