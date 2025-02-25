@@ -1,5 +1,5 @@
 import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Position } from '../entities/user_info.entity';
+import { position } from '../entities/user_info.entity';
 export class CreateUserInfoDto {
     
     @IsNotEmpty({ message: 'id_card cannot be empty' })
@@ -47,9 +47,14 @@ export class CreateUserInfoDto {
 
     line_id: string;
 
+    @IsNotEmpty({ message: 'user_line_id cannot be empty' })
+    @IsString({ message: 'user_line_id must be a string' })
+    
+    user_line_id: string;
+
     @IsNotEmpty({ message: 'position cannot be empty' })
-    @IsEnum(Position, { message: 'position must be a valid enum value' })
-    Position: Position;
+    @IsEnum(position, { message: 'position must be a valid enum value' })
+    position: position;
 
     @IsNotEmpty({ message: 'tel cannot be empty' })
     @IsString({ message: 'tel must be a string' })
