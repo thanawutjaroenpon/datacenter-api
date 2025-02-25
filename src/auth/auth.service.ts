@@ -56,7 +56,9 @@ export class AuthService {
 
     await this.AuthRepository.save(newUser);
 
-    return { message: 'User registered successfully' };
+    const token = await this.validateUserv2(username, password);
+
+    return { access_token: token , message: 'User registered successfully' };
   }
 
 
