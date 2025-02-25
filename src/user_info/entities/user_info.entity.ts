@@ -33,13 +33,13 @@ export class UserInfo {
   @Column({ length: 20 })
   password: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100,nullable:true })
   user_line_id: string;
 
   @Column({ length: 32 })
   token_id: string;
 
-  @Column({ length: 20 })
+  @Column({ length: 20 ,nullable:true})
   line_id: string;
 
   @Column({ length: 10 })
@@ -65,7 +65,7 @@ export class UserInfo {
 
   @Column({ nullable: true })
   nfc_id: string
-  @Column({ default: '0000' })
+  @Column({ default: '0000',nullable:true })
   pin: string
 
   @Column({ default: position.Student })
