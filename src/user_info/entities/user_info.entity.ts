@@ -2,7 +2,7 @@ import { IsEnum } from "class-validator";
 import { Auth } from "src/auth/entities/auth.entity";
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-export enum Position {
+export enum position {
   Student = 'Student',
   Teacher = 'Teacher',
   Admin = 'Admin'
@@ -33,6 +33,9 @@ export class UserInfo {
   @Column({ length: 20 })
   password: string;
 
+  @Column({ length: 100 })
+  user_line_id: string;
+
   @Column({ length: 32 })
   token_id: string;
 
@@ -43,7 +46,7 @@ export class UserInfo {
   teleiphone: string;
 
   @Column({ nullable: true })
-  date_of_birth: Date;
+  date_of_birth: string;
 
   @Column({ length: 5 })
   blood_group: string;
@@ -62,12 +65,12 @@ export class UserInfo {
 
   @Column({ nullable: true })
   nfc_id: string
-  @Column({ nullable: true })
+  @Column({ default: '0000' })
   pin: string
 
-  @Column({ default:Position.Student })
-  @IsEnum(Position)
-  Position: Position;
+  @Column({ default: position.Student })
+  @IsEnum(position)
+  position: position;
 
 
   @OneToOne(() => Auth, auth => auth.userInfo)
