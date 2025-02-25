@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserInfoDto } from './dto/create-user_info.dto';
 import { UpdateUserInfoDto } from './dto/update-user_info.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -93,7 +93,7 @@ export class UserInfoService {
   
     const user = await this.userInfoRepository.findOne({
       where: { student_id: student_id },
-      select: ['id_card', 'first_name', 'last_name','Position','student_id'],
+      select: ['id_card', 'first_name', 'last_name','position','student_id'],
     });
   
     console.log('Database query result:', user); // Database response check
@@ -105,23 +105,29 @@ export class UserInfoService {
     return user;
   }
 
-  async updateByStudent_id(student_id: string, updateUserInfoDto: UpdateUserInfoDto) {
-    const userInfo = await this.userInfoRepository.findOne({ where: { student_id } });
-    if (!userInfo) {
-      throw new NotFoundException(`UserInfo with ID #${student_id} not found`);
-    }
-    if(updateUserInfoDto.student_id && updateUserInfoDto.student_id !== userInfo.student_id){
-      const existingUserstudent_id = await this.userInfoRepository.findOne({
-        where: {  student_id: updateUserInfoDto.student_id },
-      });
-      if (existingUserstudent_id) {
-        throw new NotFoundException(`UserInfo with Student ID #${updateUserInfoDto.student_id} already exists`);
-      }
-    }
-    await this.userInfoRepository.update(student_id, updateUserInfoDto);
+  async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
 
-    return this.userInfoRepository.findOne({ where: { student_id } });
-  }
+    
+
+    const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
+    if (!userInfo) {
+        throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
+    }
+
+    
+ 
+    const { id_card: excludedId, ...updateData } = updateUserInfoDto;
+    Object.assign(userInfo, updateData);
+    
+  
+    const updatedUserInfo = await this.userInfoRepository.save(userInfo);
+  
+    return updatedUserInfo;
+
+}
+
+  
+  
 
 
   async Getprofile(currentUser:string){

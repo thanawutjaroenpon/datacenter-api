@@ -64,9 +64,10 @@ export class UserInfoController {
   findallById(@Param('id') id: number) {
     return this.userInfoService.findAllById(id);
   }
-  @Put(':user')//New add
-  updateByStudent_id(@Param('student_id') student_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
-    return this.userInfoService.updateByStudent_id(student_id, updateUserInfoDto);
+
+  @Put('id_card/:id_card')//New add
+  updateByid_card(@Param('id_card') id_card: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
+    return this.userInfoService.updateByid_card(id_card, updateUserInfoDto);
   }
 
   @Put(':id')
