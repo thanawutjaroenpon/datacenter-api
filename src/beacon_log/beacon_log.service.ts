@@ -23,7 +23,11 @@ export class BeaconLogService {
 
   async GetRooms(): Promise<Partial<BeaconLog>[]> {
     return await this.beaconLogRepository.find({
-      select: ['Room_ID', 'in_room', 'out_room'],
+      select: {
+        in_room: true,
+        room: { room_id: true },
+      },
+      relations: ['room'],
     });
   }
 

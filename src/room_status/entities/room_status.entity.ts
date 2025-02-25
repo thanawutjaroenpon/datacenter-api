@@ -5,16 +5,22 @@ import { BeaconLog } from '../../beacon_log/entities/beacon_log.entity';
 @Entity('room_status')
 export class RoomStatus {
     @PrimaryGeneratedColumn()
-    Room_Status_ID: number;
+    id: number;
 
-    @PrimaryColumn({ length: 50 })
-    Room_ID: string;
+    @Column({ length: 50, nullable: true })
+    room_id: string;
 
-    @Column()
-    room_status: boolean; 
+    @Column({ length: 255 })
+    id_beacon: string;
 
-    @Column()
-    item_status: boolean;
+    @Column({nullable: true})
+    door_no: number; 
+
+    @Column({ length: 5, nullable: true })
+    user_status: string;
+
+    @Column({ length: 5, nullable: true })
+    room_status: string;
 
     @OneToMany(() => BeaconLog, (beacon) => beacon.room)
     beacon: BeaconLog[];

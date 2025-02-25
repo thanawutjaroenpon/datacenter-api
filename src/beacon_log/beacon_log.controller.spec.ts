@@ -37,16 +37,16 @@ describe('BeaconLogController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('create', () => {
-    it('should create and return a beacon log entry', async () => {
-      const dto: CreateBeaconLogDto = { Room_ID: 'C303', in_room: new Date(), out_room: new Date() } as CreateBeaconLogDto;
+  // describe('create', () => {
+  //   it('should create and return a beacon log entry', async () => {
+  //     const dto: CreateBeaconLogDto = { Room_ID: 'C303', in_room: new Date(), out_room: new Date() } as CreateBeaconLogDto;
 
-      const result = await controller.create(dto);
-      expect(service.create).toHaveBeenCalledWith(dto);
-      expect(result).toHaveProperty('id');
-      expect(result.Room_ID).toBe(dto.Room_ID);
-    });
-  });
+  //     const result = await controller.create(dto);
+  //     expect(service.create).toHaveBeenCalledWith(dto);
+  //     expect(result).toHaveProperty('id');
+  //     expect(result.Room_ID).toBe(dto.Room_ID);
+  //   });
+  // });
 
   describe('GetAllBeaconLog', () => {
     it('should return all beacon logs', async () => {

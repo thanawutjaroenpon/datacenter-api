@@ -4,23 +4,20 @@ import { RoomStatus } from '../../room_status/entities/room_status.entity';
 @Entity('beacon_log')
 export class BeaconLog {
     @PrimaryGeneratedColumn()
-    Beacon_Log_ID: number;
+    id: number;
 
     @PrimaryColumn({ length: 255 })
-    ID_Beacon: string;
+    id_beacon: string;
 
-    @Column({ length: 20 })
-    Line_ID: string;
+    @Column({ length: 20, nullable: true })
+    user_line_id: string;
 
-    @Column({ length: 50 })
-    Room_ID: string;
+    @Column({ length: 20, nullable: true })
+    line_name_id: string;
 
     @Column()
     in_room: Date;
 
-    @Column()
-    out_room: Date;
-
-    @ManyToOne(() => RoomStatus, (room) => room.Room_ID, {onDelete: 'CASCADE'})
+    @ManyToOne(() => RoomStatus, (room) => room.id_beacon, {onDelete: 'CASCADE'})
     room: RoomStatus;
 }
