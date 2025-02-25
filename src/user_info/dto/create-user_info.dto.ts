@@ -94,4 +94,8 @@ export class CreateUserInfoDto {
     @IsString({ message: 'pin must be a string' })
 
     pin: string;
+
+    @IsNotEmpty({ message: 'photograph cannot be empty' })
+    @IsString({ message: 'photograph must be a string' })
+    photograph: string;
 }

@@ -65,7 +65,7 @@ export class UserInfo {
 
   @Column({ nullable: true })
   nfc_id: string
-  @Column({ nullable: true })
+  @Column({ default: '0000' })
   pin: string
 
   @Column({ default: position.Student })
