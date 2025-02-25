@@ -62,7 +62,7 @@ export class CreateUserInfoDto {
     teleiphone: string;
 
     @IsNotEmpty({ message: 'date_of_birth cannot be empty' })
-    @IsDateString({}, { message: 'date_of_birth must be a valid date string' })
+    @IsString({ message: 'date_of_birth must be a valid date string' })
     date_of_birth: string;
 
     @IsNotEmpty({ message: 'blood_group cannot be empty' })

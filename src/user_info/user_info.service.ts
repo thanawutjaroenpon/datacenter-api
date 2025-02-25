@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserInfoDto } from './dto/create-user_info.dto';
 import { UpdateUserInfoDto } from './dto/update-user_info.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -106,22 +106,24 @@ export class UserInfoService {
   }
 
   async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
-    const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
-    if (!userInfo) {
-      throw new NotFoundException(`UserInfo with ID #${id_card} not found`);
-    }
-    if(updateUserInfoDto.id_card && updateUserInfoDto.id_card !== userInfo.id_card){
-      const existingUserid_card = await this.userInfoRepository.findOne({
-        where: {  id_card: updateUserInfoDto.id_card },
-      });
-      if (existingUserid_card) {
-        throw new NotFoundException(`UserInfo with Student ID #${updateUserInfoDto.id_card} already exists`);
-      }
-    }
-    await this.userInfoRepository.update(id_card, updateUserInfoDto);
 
-    return this.userInfoRepository.findOne({ where: { id_card } });
+    console.log(id_card)
+    const userInfo = await this.userInfoRepository.findOne({ where: { id_card:id_card } });
+    
+    if (!userInfo) {
+      throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
+    }
+
+
+    Object.assign(userInfo, updateUserInfoDto);
+    const updatedUserInfo = await this.userInfoRepository.save(userInfo);
+  
+  
+    return updatedUserInfo;
+
   }
+  
+  
 
 
   async Getprofile(currentUser:string){
