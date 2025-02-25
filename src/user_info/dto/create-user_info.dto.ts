@@ -84,4 +84,14 @@ export class CreateUserInfoDto {
     @IsString({ message: 'guardian_phone must be a string' })
 
     guardian_phone: string;
+
+    @IsNotEmpty({ message: 'NFC cannot be empty' })
+    @IsString({ message: 'NFC must be a string' })
+
+    nfc_id: string;
+
+    @IsNotEmpty({ message: 'pin cannot be empty' })
+    @IsString({ message: 'pin must be a string' })
+
+    pin: string;
 }

@@ -94,7 +94,7 @@ export class UserInfoService {
   
     const user = await this.userInfoRepository.findOne({
       where: { student_id: student_id },
-      select: ['id_card', 'first_name', 'last_name','Position','student_id'],
+      select: ['id_card', 'first_name', 'last_name','position','student_id'],
     });
   
     console.log('Database query result:', user); // Database response check
@@ -106,22 +106,22 @@ export class UserInfoService {
     return user;
   }
 
-  async updateByStudent_id(student_id: string, updateUserInfoDto: UpdateUserInfoDto) {
-    const userInfo = await this.userInfoRepository.findOne({ where: { student_id } });
+  async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
+    const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
     if (!userInfo) {
-      throw new NotFoundException(`UserInfo with ID #${student_id} not found`);
+      throw new NotFoundException(`UserInfo with ID #${id_card} not found`);
     }
-    if(updateUserInfoDto.student_id && updateUserInfoDto.student_id !== userInfo.student_id){
-      const existingUserstudent_id = await this.userInfoRepository.findOne({
-        where: {  student_id: updateUserInfoDto.student_id },
+    if(updateUserInfoDto.id_card && updateUserInfoDto.id_card !== userInfo.id_card){
+      const existingUserid_card = await this.userInfoRepository.findOne({
+        where: {  id_card: updateUserInfoDto.id_card },
       });
-      if (existingUserstudent_id) {
-        throw new NotFoundException(`UserInfo with Student ID #${updateUserInfoDto.student_id} already exists`);
+      if (existingUserid_card) {
+        throw new NotFoundException(`UserInfo with Student ID #${updateUserInfoDto.id_card} already exists`);
       }
     }
-    await this.userInfoRepository.update(student_id, updateUserInfoDto);
+    await this.userInfoRepository.update(id_card, updateUserInfoDto);
 
-    return this.userInfoRepository.findOne({ where: { student_id } });
+    return this.userInfoRepository.findOne({ where: { id_card } });
   }
 
 
