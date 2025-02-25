@@ -107,26 +107,26 @@ export class UserInfoService {
 
   
   async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
+
+    
+
     const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
     if (!userInfo) {
-      throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
+        throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
     }
+
+    
+ 
+    const { id_card: excludedId, ...updateData } = updateUserInfoDto;
+    Object.assign(userInfo, updateData);
+    
   
-    if (updateUserInfoDto.id_card && updateUserInfoDto.id_card !== userInfo.id_card) {
-      const existingUserid_card = await this.userInfoRepository.findOne({
-        where: { id_card: updateUserInfoDto.id_card },
-      });
-      if (existingUserid_card) {
-        throw new ConflictException(`UserInfo with ID Card #${updateUserInfoDto.id_card} already exists`);
-      }
-    }
+    const updatedUserInfo = await this.userInfoRepository.save(userInfo);
   
-    // Merge changes into the existing entity
-    Object.assign(userInfo, updateUserInfoDto);
-  
-    // Save updated entity (handles relations & validation correctly)
-    return await this.userInfoRepository.save(userInfo);
-  }
+    return updatedUserInfo;
+
+}
+
   
   
 
