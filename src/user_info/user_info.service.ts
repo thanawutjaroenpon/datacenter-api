@@ -105,6 +105,7 @@ export class UserInfoService {
     return user;
   }
 
+  
   async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
     const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
     if (!userInfo) {
