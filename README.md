@@ -18,3 +18,9 @@ nest g res <name component>
 ```sql
 TRUNCATE payment, order_payment, order_item_atribute_value, order_item_atribute, order_item, "order" RESTART IDENTITY CASCADE;
 ```
+
+### Run code
+```
+npm run start:dev
+```
+
