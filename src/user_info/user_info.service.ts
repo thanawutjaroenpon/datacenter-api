@@ -107,21 +107,25 @@ export class UserInfoService {
 
   async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
 
-    console.log(id_card)
-    const userInfo = await this.userInfoRepository.findOne({ where: { id_card:id_card } });
     
+
+    const userInfo = await this.userInfoRepository.findOne({ where: { id_card } });
     if (!userInfo) {
-      throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
+        throw new NotFoundException(`UserInfo with ID Card #${id_card} not found`);
     }
 
-
-    Object.assign(userInfo, updateUserInfoDto);
-    const updatedUserInfo = await this.userInfoRepository.save(userInfo);
+    
+ 
+    const { id_card: excludedId, ...updateData } = updateUserInfoDto;
+    Object.assign(userInfo, updateData);
+    
   
+    const updatedUserInfo = await this.userInfoRepository.save(userInfo);
   
     return updatedUserInfo;
 
-  }
+}
+
   
   
 
