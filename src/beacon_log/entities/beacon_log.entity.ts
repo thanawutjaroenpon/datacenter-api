@@ -7,17 +7,23 @@ export class BeaconLog {
     id: number;
 
     @PrimaryColumn({ length: 255 })
-    id_beacon: string;
+    hwid: string;
 
     @Column({ length: 20, nullable: true })
-    user_line_id: string;
-
-    @Column({ length: 20, nullable: true })
-    line_name_id: string;
+    userid: string;
 
     @Column()
-    in_room: Date;
+    timestamp: Date;
 
-    @ManyToOne(() => RoomStatus, (room) => room.id_beacon, {onDelete: 'CASCADE'})
+    @ManyToOne(() => RoomStatus, (room) => room.hwid, {onDelete: 'CASCADE'})
     room: RoomStatus;
+}
+
+@Entity('user_profile')
+export class UserProfile {
+    @PrimaryColumn({ length: 50 })
+    userid: string;
+
+    @Column({ length: 100, nullable: true })
+    displayname: string;
 }

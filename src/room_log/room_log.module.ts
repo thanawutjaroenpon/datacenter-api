@@ -3,11 +3,11 @@ import { RoomLogService } from './room_log.service';
 import { RoomLogController } from './room_log.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserInfo } from '../user_info/entities/user_info.entity';
-import { BeaconLog } from '../beacon_log/entities/beacon_log.entity';
+import { BeaconLog, UserProfile } from '../beacon_log/entities/beacon_log.entity';
 import { RoomStatus } from '../room_status/entities/room_status.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ UserInfo, BeaconLog, RoomStatus])],
+  imports: [TypeOrmModule.forFeature([ UserInfo, BeaconLog, RoomStatus, UserProfile])],
   controllers: [RoomLogController],
   providers: [RoomLogService],
 })

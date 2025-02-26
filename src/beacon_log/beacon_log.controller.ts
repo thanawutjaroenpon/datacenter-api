@@ -12,10 +12,10 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 export class BeaconLogController {
   constructor(private readonly beaconLogService: BeaconLogService) {}
 
-  @Post()
-  async create(@Body() createBeaconLogDto: CreateBeaconLogDto) {
-    return this.beaconLogService.create(createBeaconLogDto);
-  }
+  // @Post()
+  // async create(@Body() createBeaconLogDto: CreateBeaconLogDto) {
+  //   return this.beaconLogService.create(createBeaconLogDto);
+  // }
 
   @Get()
   async GetAllBeaconLog() {

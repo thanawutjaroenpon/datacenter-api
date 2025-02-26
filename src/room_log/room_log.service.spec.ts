@@ -2,15 +2,18 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RoomLogService } from './room_log.service';
 import { Repository } from 'typeorm';
 //import { RoomLog, Status } from './entities/room_log.entity';
-import { BeaconLog } from '../beacon_log/entities/beacon_log.entity';
+import { BeaconLog, UserProfile } from '../beacon_log/entities/beacon_log.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserInfo } from './../user_info/entities/user_info.entity';
+import { RoomStatus } from './../room_status/entities/room_status.entity';
 
 describe('RoomLogService', () => {
   let service: RoomLogService;
   //let roomLogRepository: Repository<RoomLog>;
   let userInfoRepository: Repository<UserInfo>;
   let beaconLogRepository: Repository<BeaconLog>;
+  let userProfileRepository: Repository<UserProfile>;
+  let roomStatusRepository: Repository<RoomStatus>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -58,9 +61,15 @@ describe('RoomLogService', () => {
 
     it('should return an array of students', async () => {
       const roomLog = new BeaconLog();
-      roomLog.line_name_id = '64200002';
       roomLog.room.room_id = 'A101';
+      roomLog.hwid = '123456';
+      roomLog.timestamp = new Date();
       jest.spyOn(beaconLogRepository, 'find').mockResolvedValue([roomLog]);
+
+      const userProfile = new UserProfile();
+      userProfile.displayname = '64200002';
+      userProfile.userid = '1';
+      jest.spyOn(userProfileRepository, 'find').mockResolvedValue([userProfile]);
 
       const userInfo = new UserInfo();
       userInfo.student_id = '64200002';
@@ -68,9 +77,14 @@ describe('RoomLogService', () => {
       userInfo.last_name = 'nanvong';
       jest.spyOn(userInfoRepository, 'findOne').mockResolvedValue(userInfo);
 
+      const roomStats = new RoomStatus();
+      roomStats.hwid = '123456';
+      roomStats.room_id = 'A101';
+      jest.spyOn(roomStatusRepository, 'find').mockResolvedValue([roomStats]);
+
       const beaconLog = new BeaconLog();
       beaconLog.room.room_id = 'A101';
-      beaconLog.in_room = new Date();
+      beaconLog.timestamp = new Date();
       jest.spyOn(beaconLogRepository, 'find').mockResolvedValue([beaconLog]);
 
       const result = await service.GetAdminLogRoom();
@@ -81,7 +95,7 @@ describe('RoomLogService', () => {
           firstname: 'kottaboung',
           lastname: 'nanvong',
           room: 'A101',
-          time_enter: beaconLog.in_room,
+          time_enter: beaconLog.timestamp,
           time_exit: null,
         }
       ]);
@@ -104,7 +118,7 @@ describe('RoomLogService', () => {
     const beaconLog = new BeaconLog();
     beaconLog.id = 1;
     beaconLog.room.room_id = 'A101';
-    beaconLog.in_room = new Date();
+    beaconLog.timestamp = new Date();
   
     it('should return "Student with code 64200002 not found" if student does not exist', async () => {
       jest.spyOn(userInfoRepository, 'findOne').mockResolvedValue(null);
@@ -128,7 +142,7 @@ describe('RoomLogService', () => {
         {
           id: 1,
           room: 'A101',
-          time_enter: beaconLog.in_room,
+          time_enter: beaconLog.timestamp,
         }
       ]);
     });

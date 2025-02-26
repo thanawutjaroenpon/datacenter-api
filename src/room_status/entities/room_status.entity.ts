@@ -11,7 +11,7 @@ export class RoomStatus {
     room_id: string;
 
     @Column({ length: 255 })
-    id_beacon: string;
+    hwid: string;
 
     @Column({nullable: true})
     door_no: number; 

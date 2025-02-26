@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserInfo } from '../user_info/entities/user_info.entity';
 import { RoomStatus } from '../room_status/entities/room_status.entity';
-import { BeaconLog } from '../beacon_log/entities/beacon_log.entity';
+import { BeaconLog, UserProfile } from '../beacon_log/entities/beacon_log.entity';
 import { Student } from '../student/entities/student.entity';
 
 @Injectable()
@@ -23,10 +23,14 @@ export class RoomLogService {
     
     @InjectRepository(RoomStatus)
     private roomStatusRepository: Repository<RoomStatus>,
+
+    @InjectRepository(UserProfile)
+    private userProfileRepository: Repository<UserProfile>,
   ) {}
 
   async GetAdminLogRoom() {
-    const beacons = await this.beaconLogRepository.find();
+    const beacons = await this.userProfileRepository.find();
+    const rooms = await this.beaconLogRepository.find();
   
     //const students = await this.roomLogRepository.find();
   
@@ -37,18 +41,30 @@ export class RoomLogService {
     const result = await Promise.all(
       beacons.map(async (student, index) => {
         const findname = await this.userInfoRepository.findOne({
-          where: { student_id:  student.line_name_id },
+          where: { student_id:  student.displayname },
+        });
+
+        const findUserid = await this.beaconLogRepository.findOne({
+          where: { userid: student.userid },
+        });
+
+        const findHwid = await this.roomStatusRepository.findOne({
+          where: { hwid: findUserid.hwid },
+        });
+
+        const findRoom = await this.roomStatusRepository.findOne({
+          where: { room_id: findHwid.room_id },
         });
 
         //const beacon = beacons.find((b) => b.Room_ID === student.Room_ID);
   
         return {
           id: index + 1,
-          code: student.line_name_id ,
+          code: findname.student_id ,
           firstname: findname?.first_name || "Unknown",
           lastname: findname?.last_name || "Unknown",
-          room: student.room.room_id,
-          time_enter: student.in_room || null,
+          room: findRoom?.room_id || "Unknown",
+          time_enter: findUserid.timestamp || null,
         };
       })
     );
@@ -66,24 +82,30 @@ export class RoomLogService {
         return `Student with code ${code} not found`;
       }
     
-      const roomLogs = await this.beaconLogRepository.find({
-        where: { line_name_id: code },
+      const roomLogs = await this.userProfileRepository.find({
+        where: { displayname: code },
       });
     
       if (!roomLogs.length) {
         return `No room logs found for student ${code}`;
       }
     
-      const beacons = await this.beaconLogRepository.find();
+      const beacons = await this.beaconLogRepository.find();  
+
+      const roomStatus =  await this.roomStatusRepository.find();
     
       const result = roomLogs
         .map((log, index) => {
-          const beacon = beacons.find((b) => b.room.room_id === log.room.room_id);
+          const beacon = beacons.find((b) => b.userid === log.userid);
+
+          const findHwid = roomStatus.find((b) => b.hwid === beacon.hwid);
+
+          const findRoom = roomStatus.find((b) => b.room_id === findHwid.room_id);
     
           return {
             id: index + 1,
-            room: log.room.room_id,
-            time_enter: beacon?.in_room || null,
+            room: findRoom?.room_id || "Unknown",
+            time_enter: beacon?.timestamp || null,
           };
         });
     
