@@ -1,10 +1,10 @@
 import { UserInfo } from "src/user_info/entities/user_info.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('nfc_log')
 export class NfcLog {
-    @PrimaryGeneratedColumn()
-    id: number;
+    // @PrimaryGeneratedColumn()
+    // id: number;
 
     @Column({ nullable: true })
     student_id: string; // This should match the type of `student_id` in UserInfo
@@ -12,7 +12,7 @@ export class NfcLog {
     @Column({ length: 20, nullable: true })
     room_id: string; // Fixed typo: 'rooom_id' -> 'room_id'
 
-    @Column()
+    @PrimaryColumn()
     timestamp: Date;
 
     // @ManyToOne(() => UserInfo, (userInfo) => userInfo.student_id)
