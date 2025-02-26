@@ -8,7 +8,7 @@ export class RoomStatus {
     Room_Status_ID: number;
 
     @PrimaryColumn({ length: 50 })
-    Room_ID: string;
+    room_id: string;
 
     @Column()
     room_status: boolean; 

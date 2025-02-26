@@ -34,8 +34,8 @@ describe('RoomStatusController', () => {
   describe('GetAllRoomsStatus', () => {
     it('should return all room statuses', async () => {
       const mockRooms: RoomStatus[] = [
-        { Room_Status_ID: 1, Room_ID: 'A101', room_status: true, item_status: false, beacon: [] },
-        { Room_Status_ID: 2, Room_ID: 'B312', room_status: false, item_status: true, beacon: [] },
+        { Room_Status_ID: 1, room_id: 'A101', room_status: true, item_status: false, beacon: [] },
+        { Room_Status_ID: 2, room_id: 'B312', room_status: false, item_status: true, beacon: [] },
       ];
 
       mockRoomStatusService.GetAllRoomsStatus.mockResolvedValue(mockRooms);
