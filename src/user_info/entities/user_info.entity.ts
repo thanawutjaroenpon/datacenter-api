@@ -1,6 +1,7 @@
 import { IsEnum } from "class-validator";
 import { Auth } from "src/auth/entities/auth.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UserProfile } from "src/beacon_log/entities/beacon_log.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export enum position {
   Student = 'Student',
@@ -34,7 +35,7 @@ export class UserInfo {
   password: string;
 
 
-  @Column({ length: 100,nullable:true })
+  @Column({nullable:true })
   user_line_id: string;
 
   @Column({ length: 32 })
@@ -74,8 +75,14 @@ export class UserInfo {
   @IsEnum(position)
   position: position;
 
+  @OneToOne(() => UserProfile)
+  userProfile: UserProfile;
 
   @OneToOne(() => Auth, auth => auth.userInfo)
   auth: Auth; // Relation back to Auth
+
+  @OneToOne(()=> UserProfile, userprofile => userprofile.userid)
+  @JoinColumn({ name: 'user_line_id' })
+  userprofile: UserProfile;
 }
 
