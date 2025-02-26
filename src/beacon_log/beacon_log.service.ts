@@ -13,9 +13,9 @@ export class BeaconLogService {
     private beaconLogRepository: Repository<BeaconLog>,
   ) {}
 
-  async create(createBeaconLogDto: CreateBeaconLogDto): Promise<BeaconLog> {
-    return await this.beaconLogRepository.save(createBeaconLogDto);
-  }
+  // async create(createBeaconLogDto: CreateBeaconLogDto): Promise<BeaconLog> {
+  //   return await this.beaconLogRepository.save(createBeaconLogDto);
+  // }
 
   async GetBeaconLog(): Promise<BeaconLog[]> {
     return await this.beaconLogRepository.find();
@@ -23,7 +23,11 @@ export class BeaconLogService {
 
   async GetRooms(): Promise<Partial<BeaconLog>[]> {
     return await this.beaconLogRepository.find({
-      select: ['Room_ID', 'in_room', 'out_room'],
+      select: {
+        timestamp: true,
+        room: { room_id: true },
+      },
+      relations: ['room'],
     });
   }
 

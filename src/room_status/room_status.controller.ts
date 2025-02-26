@@ -17,17 +17,4 @@ export class RoomStatusController {
     return this.roomStatusService.GetAllRoomsStatus();
   }
 
-  @Get(':room')
-  async GetMember(@Param('room') id: string) {
-    return this.roomStatusService.GetMemberInRoom(id);
-  }
-
-  @Put(':room')
-  async opendoor(
-    @Param('room') id: string,
-    @Body('status') status: boolean,
-  ) {
-    return this.roomStatusService.updateRoomStatus(id, status);
-  }
-
 }
