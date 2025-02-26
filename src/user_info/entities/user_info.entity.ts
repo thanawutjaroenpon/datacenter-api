@@ -85,9 +85,9 @@ export class UserInfo {
   @OneToOne(() => Auth, auth => auth.userInfo)
   auth: Auth; // Relation back to Auth
 
-  @OneToOne(()=> UserProfile, userprofile => userprofile.userid)
-  @JoinColumn({ name: 'user_line_id' })
-  userprofile: UserProfile;
+  // @OneToOne(()=> UserProfile, userprofile => userprofile.userid)
+  // @JoinColumn({ name: 'user_line_id' })
+  // userprofile: UserProfile;
 
 
 }
