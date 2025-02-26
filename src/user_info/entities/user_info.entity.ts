@@ -1,7 +1,8 @@
 import { IsEnum } from "class-validator";
 import { Auth } from "src/auth/entities/auth.entity";
 import { UserProfile } from "src/beacon_log/entities/beacon_log.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { NfcLog } from "src/nfc_log/entities/nfc_log.entity";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 export enum position {
   Student = 'Student',
@@ -9,6 +10,7 @@ export enum position {
   Admin = 'Admin'
 }
 @Entity()
+@Unique(['student_id'])
 export class UserInfo {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,8 +18,10 @@ export class UserInfo {
   @Column({ length: 13, unique: true })
   id_card: string;
 
-  @Column({ length: 8, unique: true })
+  @Column({ length: 8, unique: true ,nullable:true})
   student_id: string;
+  @OneToMany(() => NfcLog, nfcLog => nfcLog.userInfo)
+  nfcLogs: NfcLog[]; 
 
   @Column({ length: 50 })
   first_name: string;
@@ -84,5 +88,7 @@ export class UserInfo {
   @OneToOne(()=> UserProfile, userprofile => userprofile.userid)
   @JoinColumn({ name: 'user_line_id' })
   userprofile: UserProfile;
+
+
 }
 

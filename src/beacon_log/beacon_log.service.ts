@@ -25,7 +25,7 @@ export class BeaconLogService {
     return await this.beaconLogRepository.find({
       select: {
         timestamp: true,
-        room: { room_id: true },
+        // room: { room_id: true },
       },
       relations: ['room'],
     });
