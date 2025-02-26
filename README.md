@@ -12,7 +12,11 @@ npm run migration:generate --name=create_counter_table
 
 npm run migration:run
 ```
+
+### Create new component
+```
 nest g res <name component>
+```
 
 #### Clear Database
 ```sql
