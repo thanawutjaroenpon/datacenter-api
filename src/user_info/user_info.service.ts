@@ -137,7 +137,13 @@ export class UserInfoService {
   }
   const user = currentUser
   const user2 = await this.authRepository.findOne({where:{username:user}})
-  const profile = await this.userInfoRepository.findOne({where:{id_card:user2.id_card}})
+  const id_card = user2.id_card
+  if(!id_card)
+  {
+    throw new NotFoundException("DATA_NOTFOUND")
+  }
+  const profile = await this.userInfoRepository.findOne({where:{id_card:id_card}})
+  
   return profile
   }
  
