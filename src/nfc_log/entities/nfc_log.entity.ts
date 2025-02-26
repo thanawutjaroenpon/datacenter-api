@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedC
 
 @Entity('nfc_log')
 export class NfcLog {
-    // @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn()
     id: string;
 
     @Column({ nullable: true })
@@ -12,7 +12,7 @@ export class NfcLog {
     @Column({ length: 20, nullable: true })
     room_id: string; // Fixed typo: 'rooom_id' -> 'room_id'
 
-    @PrimaryColumn()
+    @Column()
     timestamp: Date;
 
     // @ManyToOne(() => UserInfo, (userInfo) => userInfo.student_id)
