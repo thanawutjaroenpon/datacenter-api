@@ -10,6 +10,7 @@ export class RoomStatus {
     @Column({ length: 50, nullable: true })
     room_id: string;
 
+
     @Column({ length: 255 })
     hwid: string;
 
@@ -21,6 +22,7 @@ export class RoomStatus {
 
     @Column({ length: 5, nullable: true })
     room_status: string;
+
 
     @OneToMany(() => BeaconLog, (beacon) => beacon.room)
     beacon: BeaconLog[];
