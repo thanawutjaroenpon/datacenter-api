@@ -22,6 +22,6 @@ export class RoomStatus {
     @Column({ length: 5, nullable: true })
     room_status: string;
     
-    @OneToMany(() => BeaconLog, beaconlog => beaconlog.roomStatus)
-    beaconlog: BeaconLog[];
+    // @OneToMany(() => BeaconLog, beaconlog => beaconlog.roomStatus)
+    // beaconlog: BeaconLog[];
 }

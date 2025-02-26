@@ -15,7 +15,7 @@ export class NfcLog {
     @Column()
     timestamp: Date;
 
-    @ManyToOne(() => UserInfo, (userInfo) => userInfo.student_id)
-    @JoinColumn({ name: 'student_id', referencedColumnName: 'student_id' }) // Reference 'student_id' in UserInfo
-    userInfo: UserInfo;
+    // @ManyToOne(() => UserInfo, (userInfo) => userInfo.student_id)
+    // @JoinColumn({ name: 'student_id', referencedColumnName: 'student_id' }) // Reference 'student_id' in UserInfo
+    // userInfo: UserInfo;
 }

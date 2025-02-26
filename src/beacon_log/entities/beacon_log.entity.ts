@@ -11,12 +11,12 @@ export class UserProfile {
     @Column({ length: 100, nullable: true })
     displayname: string;
 
-    @OneToOne(() => UserInfo, userInfo => userInfo.user_line_id)
-    @JoinColumn({ name: 'userid' })
-    userInfo: UserInfo; 
+    // @OneToOne(() => UserInfo, userInfo => userInfo.user_line_id)
+    // @JoinColumn({ name: 'userid' })
+    // userInfo: UserInfo; 
 
-    @OneToMany(() => BeaconLog, (beaconlog) => beaconlog.userid)
-    beaconlog: BeaconLog[];
+    // @OneToMany(() => BeaconLog, (beaconlog) => beaconlog.userid)
+    // beaconlog: BeaconLog[];
     
 }
 @Entity('beacon_log')
@@ -33,13 +33,13 @@ export class BeaconLog {
     @Column()
     timestamp: Date;
 
-    @ManyToOne(() => UserProfile, userprofile => userprofile.userid)
-    @JoinColumn({name:'userid'})
-    userprofile: UserProfile;
+    // @ManyToOne(() => UserProfile, userprofile => userprofile.userid)
+    // @JoinColumn({name:'userid'})
+    // userprofile: UserProfile;
     
-    @ManyToOne(() => RoomStatus, roomStatus => roomStatus.beaconlog)
-    @JoinColumn({ name: 'hwid', referencedColumnName: 'hwid' })  // Use 'hwid' as the foreign key
-    roomStatus: RoomStatus;
+    // @ManyToOne(() => RoomStatus, roomStatus => roomStatus.beaconlog)
+    // @JoinColumn({ name: 'hwid', referencedColumnName: 'hwid' })  // Use 'hwid' as the foreign key
+    // roomStatus: RoomStatus;
 }
 
 

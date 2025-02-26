@@ -20,8 +20,8 @@ export class UserInfo {
 
   @Column({ length: 8, unique: true ,nullable:true})
   student_id: string;
-  @OneToMany(() => NfcLog, nfcLog => nfcLog.userInfo)
-  nfcLogs: NfcLog[]; 
+  // @OneToMany(() => NfcLog, nfcLog => nfcLog.userInfo)
+  // nfcLogs: NfcLog[]; 
 
   @Column({ length: 50 })
   first_name: string;
