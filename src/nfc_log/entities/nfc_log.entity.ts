@@ -4,7 +4,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedC
 @Entity('nfc_log')
 export class NfcLog {
     // @PrimaryGeneratedColumn()
-    // id: number;
+    id: string;
 
     @Column({ nullable: true })
     student_id: string; // This should match the type of `student_id` in UserInfo
