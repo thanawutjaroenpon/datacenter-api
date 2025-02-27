@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUserInfoDto } from './dto/create-user_info.dto';
 import { UpdateUserInfoDto } from './dto/update-user_info.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,15 +15,33 @@ export class UserInfoService {
     private authRepository: Repository<Auth>
   ) {}
   
-  async create(createUserInfoDto: CreateUserInfoDto , currentUser:string) {
-    const userInfo = await this.userInfoRepository.create(createUserInfoDto)
-    const userdoc = await this.userInfoRepository.save(userInfo)
-    const findid_card = await this.authRepository.findOne({where:{username:currentUser}})
-    const sendid_card = await this.authRepository.update(findid_card.id,{id_card:createUserInfoDto.id_card})
+  async create(createUserInfoDto: CreateUserInfoDto, currentUser: string) {
+    try {
+      // Create and save user info
+      const userInfo = this.userInfoRepository.create(createUserInfoDto);
+      const userdoc = await this.userInfoRepository.save(userInfo);
   
-    return { userInfo: userdoc, auth: sendid_card };
-
+      // Find user in authRepository
+      const findid_card = await this.authRepository.findOne({
+        where: { username: currentUser },
+      });
+  
+      if (!findid_card) {
+        throw new Error(`User ${currentUser} not found in authRepository`);
+      }
+  
+      // Update id_card in authRepository
+      const sendid_card = await this.authRepository.update(findid_card.id, {
+        id_card: createUserInfoDto.id_card,
+      });
+  
+      return { userInfo: userdoc, auth: sendid_card };
+    } catch (error) {
+      console.error("Error in create:", error);
+      throw new InternalServerErrorException(error.message);
+    }
   }
+  
 
   async findOne(id: number) {
     const UserInfo = await this.userInfoRepository.findOne({
@@ -105,6 +123,7 @@ export class UserInfoService {
     return user;
   }
 
+  
   async updateByid_card(id_card: string, updateUserInfoDto: UpdateUserInfoDto) {
 
     

@@ -12,7 +12,7 @@ export class NfcLog {
     @Column({ length: 20, nullable: true })
     room_id: string; // Fixed typo: 'rooom_id' -> 'room_id'
 
-    @Column()
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }) // Automatically set by the database
     timestamp: Date;
 
     // @ManyToOne(() => UserInfo, (userInfo) => userInfo.student_id)

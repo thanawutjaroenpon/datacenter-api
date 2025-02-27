@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { BeaconLogService } from './beacon_log.service';
-import { CreateBeaconLogDto } from './dto/create-beacon_log.dto';
+import { CreateBeaconEventDto, CreateBeaconLogDto } from './dto/create-beacon_log.dto';
 import { UpdateBeaconLogDto } from './dto/update-beacon_log.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
@@ -17,17 +17,54 @@ export class BeaconLogController {
   //   return this.beaconLogService.create(createBeaconLogDto);
   // }
 
-  @Get()
+  @Get('GetBeaconLog')
   async GetAllBeaconLog() {
     return this.beaconLogService.GetBeaconLog();
   }
+  
+  // @Get('GetBeaconByUserId/:userId')
+  // async GetBeaconByUserId(@Param('userId') userId: string) {
+  //   return this.beaconLogService.GetBeaconByUserId(userId);
+  // }
 
-  @Get()
+  @Get('findUserProfileBuUserId/:userId')
+  async findUserProfileBuUserId(@Param('userId') userId: string) {
+    return this.beaconLogService.findUserProfileBuUserId(userId);
+  }
+
+  @Get('findLastedTimeStampByUserIdAndHWid/:userId/:hwid')
+  async findLastedTimeStampByUserIdAndHWid(@Param('userId') userId: string, @Param('hwid') hwid: string) {
+    return this.beaconLogService.findLastedTimeStampByUserIdAndHWid(userId, hwid);
+  }
+
+  @Get('GetAllRooms')
   async GetAllRooms() {
     return this.beaconLogService.GetRooms();
   }
 
-  
+  @Get('GetUserProfile')
+  async GetAllUserProfile() {
+    return this.beaconLogService.findUserProfile();
+  }
+
+  @Post('addBeaconEvent')
+  async createBeaconEvent(@Body() createBeaconEventDto: CreateBeaconEventDto) {
+    return this.beaconLogService.createBeaconEvent(createBeaconEventDto);
+  }
+
+  @Post('addBeaconLog')
+  async createBeaconLog(@Body() createBeaconLogDto: CreateBeaconLogDto) {
+    return this.beaconLogService.createBeaconLog(createBeaconLogDto);
+  }
+
+  @Patch('update-profile/:userId/:displayname')
+  async updateProfile(
+  @Param('userId') userId: string,
+  @Param('displayname') displayname: string,
+) {
+  return this.beaconLogService.updateUserProfile(userId, displayname);
+}
+
 
   
 }
