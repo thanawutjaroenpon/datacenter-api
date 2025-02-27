@@ -9,6 +9,6 @@ export class CreateNfcLogDto {
     @IsString()
     room_id?: string;
 
-    @IsDate()
-    timestamp: Date;
+    // @IsDate()
+    // timestamp: Date;
 }
