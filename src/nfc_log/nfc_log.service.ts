@@ -15,7 +15,9 @@ export class NfcLogService {
       private userRepository: Repository<UserInfo>,
   
     ) {}
-    async create(createNfcLogDto: CreateNfcLogDto): Promise<NfcLog> {
+  
+  
+  async create(createNfcLogDto: CreateNfcLogDto): Promise<NfcLog> {
       const nfcLog = this.nfclogrepository.create(createNfcLogDto);
       return this.nfclogrepository.save(nfcLog);
   }
