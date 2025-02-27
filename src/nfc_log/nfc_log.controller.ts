@@ -7,11 +7,11 @@ import { UpdateNfcLogDto } from './dto/update-nfc_log.dto';
 export class NfcLogController {
   constructor(private readonly nfcLogService: NfcLogService) {}
 
+
   @Post()
   create(@Body() createNfcLogDto: CreateNfcLogDto) {
-    return this.nfcLogService.create(createNfcLogDto);
+      return this.nfcLogService.create(createNfcLogDto);
   }
-
   @Get()
   findAll() {
     return this.nfcLogService.findAll();

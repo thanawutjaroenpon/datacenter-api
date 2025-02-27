@@ -15,10 +15,10 @@ export class NfcLogService {
       private userRepository: Repository<UserInfo>,
   
     ) {}
-  create(createNfcLogDto: CreateNfcLogDto) {
-    return 'This action adds a new nfcLog';
+    async create(createNfcLogDto: CreateNfcLogDto): Promise<NfcLog> {
+      const nfcLog = this.nfclogrepository.create(createNfcLogDto);
+      return this.nfclogrepository.save(nfcLog);
   }
-
   async findAll() {
  
     const logs = await this.nfclogrepository.find();
