@@ -115,10 +115,15 @@ export class BeaconLogService {
       await this.userProfileRepository.save(user);
     }
 
+    const now = new Date();
+    const formattedTimestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ` +
+                               `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+
     const beacon = this.beaconLogRepository.create({
       hwid: beacon_log.hwId,
       userid: beacon_log.userId,
-      timestamp: new Date(beacon_log.timestamp),
+      timestamp: formattedTimestamp,
       
     });
 
@@ -140,10 +145,14 @@ export class BeaconLogService {
       throw new BadRequestException('hwId (hwid) is required');
     }
 
+    const now = new Date();
+    const formattedTimestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ` +
+                               `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
     const beaconLog = this.beaconLogRepository.create({
       hwid: createBeaconLogDto.hwId,  // Explicit mapping
       userid: createBeaconLogDto.userId,
-      timestamp: createBeaconLogDto.timestamp,
+      timestamp: formattedTimestamp,
     });
 
     await this.beaconLogRepository.save(beaconLog);
