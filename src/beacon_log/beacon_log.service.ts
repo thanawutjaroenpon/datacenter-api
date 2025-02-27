@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBeaconEventDto, CreateBeaconLogDto } from './dto/create-beacon_log.dto';
 import { UpdateBeaconLogDto } from './dto/update-beacon_log.dto';
 import { BeaconLog, UserProfile } from './entities/beacon_log.entity';
@@ -102,6 +102,7 @@ export class BeaconLogService {
     });
   }
 
+
   async createBeaconEvent(dto: CreateBeaconEventDto): Promise<string> {
     const { user_profile, beacon_log } = dto;
 
@@ -123,6 +124,22 @@ export class BeaconLogService {
 
     return 'Beacon event created successfully';
   }
+
+  async createBeaconLog(createBeaconLogDto: CreateBeaconLogDto): Promise<string> {
+    if (!createBeaconLogDto.hwId) {
+      throw new BadRequestException('hwId (hwid) is required');
+    }
+
+    const beaconLog = this.beaconLogRepository.create({
+      hwid: createBeaconLogDto.hwId,  // Explicit mapping
+      userid: createBeaconLogDto.userId,
+      timestamp: createBeaconLogDto.timestamp,
+    });
+
+    await this.beaconLogRepository.save(beaconLog);
+    return 'Beacon log created successfully';
+}
+
 
   async updateUserProfile(userId: string, displayName: string): Promise<string> {
     const result = await this.userProfileRepository.update(userId, { displayname: displayName });
