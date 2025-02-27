@@ -17,6 +17,7 @@ import { BeaconLogModule } from './beacon_log/beacon_log.module';
 import { RoomStatusModule } from './room_status/room_status.module';
 import { RoomLogModule } from './room_log/room_log.module';
 import { NfcLogModule } from './nfc_log/nfc_log.module';
+import { RoomEntryModule } from './room_entry/room_entry.module';
 
 
 @Module({
@@ -45,6 +46,7 @@ import { NfcLogModule } from './nfc_log/nfc_log.module';
     RoomStatusModule,
     RoomLogModule,
     NfcLogModule,
+    RoomEntryModule,
 
 
   ],
