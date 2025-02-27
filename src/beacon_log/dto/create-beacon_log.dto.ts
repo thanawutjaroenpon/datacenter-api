@@ -1,19 +1,18 @@
 import { IsString, IsDateString, isDateString } from "class-validator";
 
-export class CreateBeaconLogDto {
-
-    // @IsString()
-    // ID_Beacon: string;
-
-    // @IsString()
-    // Line_ID: string;
-
-    // @IsString()
-    // Room_ID: string;
-
-    // @IsDateString()
-    // timestamp: Date;
-
-
-   
-}
+export class CreateUserProfileDto {
+    userId: string;
+    displayname?: string;
+  }
+  
+  export class CreateBeaconLogDto {
+    hwId: string;
+    userId: string;
+    timestamp: Date;
+  }
+  
+  export class CreateBeaconEventDto {
+    user_profile: CreateUserProfileDto;
+    beacon_log: CreateBeaconLogDto;
+  }
+  
