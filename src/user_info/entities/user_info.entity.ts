@@ -1,6 +1,8 @@
 import { IsEnum } from "class-validator";
 import { Auth } from "src/auth/entities/auth.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UserProfile } from "src/beacon_log/entities/beacon_log.entity";
+import { NfcLog } from "src/nfc_log/entities/nfc_log.entity";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 export enum position {
   Student = 'Student',
@@ -8,6 +10,7 @@ export enum position {
   Admin = 'Admin'
 }
 @Entity()
+@Unique(['student_id'])
 export class UserInfo {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,8 +18,10 @@ export class UserInfo {
   @Column({ length: 13, unique: true })
   id_card: string;
 
-  @Column({ length: 8, unique: true })
+  @Column({ length: 8, unique: true ,nullable:true})
   student_id: string;
+  // @OneToMany(() => NfcLog, nfcLog => nfcLog.userInfo)
+  // nfcLogs: NfcLog[]; 
 
   @Column({ length: 50 })
   first_name: string;
@@ -34,7 +39,7 @@ export class UserInfo {
   password: string;
 
 
-  @Column({ length: 100,nullable:true })
+  @Column({nullable:true })
   user_line_id: string;
 
   @Column({ length: 32 })
@@ -74,8 +79,16 @@ export class UserInfo {
   @IsEnum(position)
   position: position;
 
+  @OneToOne(() => UserProfile)
+  userProfile: UserProfile;
 
   @OneToOne(() => Auth, auth => auth.userInfo)
   auth: Auth; // Relation back to Auth
+
+  // @OneToOne(()=> UserProfile, userprofile => userprofile.userid)
+  // @JoinColumn({ name: 'user_line_id' })
+  // userprofile: UserProfile;
+
+
 }
 

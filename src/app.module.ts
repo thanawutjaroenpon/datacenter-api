@@ -16,6 +16,7 @@ import { UserInfoModule } from './user_info/user_info.module';
 import { BeaconLogModule } from './beacon_log/beacon_log.module';
 import { RoomStatusModule } from './room_status/room_status.module';
 import { RoomLogModule } from './room_log/room_log.module';
+import { NfcLogModule } from './nfc_log/nfc_log.module';
 
 
 @Module({
@@ -43,6 +44,7 @@ import { RoomLogModule } from './room_log/room_log.module';
     BeaconLogModule,
     RoomStatusModule,
     RoomLogModule,
+    NfcLogModule,
 
 
   ],

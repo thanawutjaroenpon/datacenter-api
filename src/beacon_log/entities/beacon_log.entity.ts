@@ -1,26 +1,45 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn , PrimaryGeneratedColumn} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn , PrimaryGeneratedColumn} from 'typeorm';
 import { RoomStatus } from '../../room_status/entities/room_status.entity';
+import { userInfo } from 'os';
+import { UserInfo } from '../../user_info/entities/user_info.entity';
+import { join } from 'path';
+@Entity('user_profile')
+export class UserProfile {
+    @PrimaryColumn()
+    userid: string;
 
+    @Column({ length: 100, nullable: true })
+    displayname: string;
+
+    // @OneToOne(() => UserInfo, userInfo => userInfo.user_line_id)
+    // @JoinColumn({ name: 'userid' })
+    // userInfo: UserInfo; 
+
+    // @OneToMany(() => BeaconLog, (beaconlog) => beaconlog.userid)
+    // beaconlog: BeaconLog[];
+    
+}
 @Entity('beacon_log')
 export class BeaconLog {
     @PrimaryGeneratedColumn()
-    Beacon_Log_ID: number;
+    id: number;
+    
+    @Column()
+    hwid: string;
 
-    @PrimaryColumn({ length: 255 })
-    ID_Beacon: string;
-
-    @Column({ length: 20 })
-    Line_ID: string;
-
-    @Column({ length: 50 })
-    Room_ID: string;
+    @Column({ nullable: true })
+    userid: string;
 
     @Column()
-    in_room: Date;
+    timestamp: Date;
 
-    @Column()
-    out_room: Date;
-
-    @ManyToOne(() => RoomStatus, (room) => room.Room_ID, {onDelete: 'CASCADE'})
-    room: RoomStatus;
+    // @ManyToOne(() => UserProfile, userprofile => userprofile.userid)
+    // @JoinColumn({name:'userid'})
+    // userprofile: UserProfile;
+    
+    // @ManyToOne(() => RoomStatus, roomStatus => roomStatus.beaconlog)
+    // @JoinColumn({ name: 'hwid', referencedColumnName: 'hwid' })  // Use 'hwid' as the foreign key
+    // roomStatus: RoomStatus;
 }
+
+
