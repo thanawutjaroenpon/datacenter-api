@@ -10,41 +10,46 @@ import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('Authorize')
 export class AuthController {
   constructor(private authService: AuthService) {}
-
-  @Post('GetToken')
-  getToken(): { token: string } {
-    const token = this.authService.validateUser();
-    return { token };
-  }
-  @ApiBearerAuth('access-token')
-  @UseGuards(JwtAuthGuard)
-  @Get('HelloWorld')
-  getHelloWorld(@Req() req: Request): string {
-    return this.authService.getHelloWorld();
-  }
   
-
-  @ApiBearerAuth('access-token')
-  @UseGuards(JwtAuthGuard)
-  @Post('GetToken')
-  getToken(): { token: string } {
-    const token = this.authService.validateUser();
-    return { token };
+  @Post('register')
+  @ApiBody({ type: AuthPayloadDto })
+  async register(@Body() authPayloadDto: AuthPayloadDto) {
+    return this.authService.register(authPayloadDto.username, authPayloadDto.password);
   }
-  @ApiBearerAuth('access-token')
-  @UseGuards(JwtAuthGuard)
+
+  @Post('login')
+  @ApiBody({ type: AuthPayloadDto })
+  async login(@Body() authPayloadDto: AuthPayloadDto) {
+    return this.authService.login(authPayloadDto.username, authPayloadDto.password);
+  }
+  // @Post('GetToken')
+  // getToken(): { token: string } {
+  //   const token = this.authService.validateUser();
+  //   return { token };
+  // }
+  // @ApiBearerAuth('access-token')
+  // @UseGuards(JwtAuthGuard)
   // @Get('HelloWorld')
   // getHelloWorld(@Req() req: Request): string {
   //   return this.authService.getHelloWorld();
   // }
   
 
-  @ApiBearerAuth('access-token')
-  @UseGuards(JwtAuthGuard)
-  @Post('login')
-  @ApiBody({ type: AuthPayloadDto })
-  async login(@Body() authPayloadDto: AuthPayloadDto) {
-    return this.authService.login(authPayloadDto.username, authPayloadDto.password);
-  }
+  // @ApiBearerAuth('access-token')
+  // @UseGuards(JwtAuthGuard)
+  // @Post('GetToken')
+  // getToken(): { token: string } {
+  //   const token = this.authService.validateUser();
+  //   return { token };
+  // // }
+  // @ApiBearerAuth('access-token')
+  // @UseGuards(JwtAuthGuard)
+  // @Get('HelloWorld')
+  // getHelloWorld(@Req() req: Request): string {
+  //   return this.authService.getHelloWorld();
+  // }
+  
+
+ 
 
 }
