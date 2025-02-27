@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ViewEntity } from "typeorm";
 
 @Entity({ name: 'room_entry_method' })
 export class RoomEntry {
