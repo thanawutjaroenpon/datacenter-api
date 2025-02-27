@@ -52,6 +52,11 @@ export class BeaconLogController {
     return this.beaconLogService.createBeaconEvent(createBeaconEventDto);
   }
 
+  @Post('addBeaconLog')
+  async createBeaconLog(@Body() createBeaconLogDto: CreateBeaconLogDto) {
+    return this.beaconLogService.createBeaconLog(createBeaconLogDto);
+  }
+
   @Patch('update-profile/:userId/:displayname')
   async updateProfile(
   @Param('userId') userId: string,
