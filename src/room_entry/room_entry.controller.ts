@@ -15,7 +15,7 @@ export class RoomEntryController {
   constructor(private readonly roomEntryService: RoomEntryService) {}
 
 
-  @Get('roomentry/:findall')
+  @Get()
   findAll() {
     return this.roomEntryService.getAllEntries();
   }
