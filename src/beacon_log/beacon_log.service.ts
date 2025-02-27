@@ -160,15 +160,24 @@ export class BeaconLogService {
 }
 
 
-  async updateUserProfile(userId: string, displayName: string): Promise<string> {
-    const result = await this.userProfileRepository.update(userId, { displayname: displayName });
-  
-    if (result.affected === 0) {
+async updateUserProfile(userId: string, displayName: string): Promise<string> {
+  const result = await this.userProfileRepository.update(userId, { displayname: displayName });
+
+  if (result.affected === 0) {
       throw new Error(`User with ID ${userId} not found.`);
-    }
-  
-    return `User profile updated successfully for ID: ${userId} to display name: ${displayName}`;
-  }  
+  }
+
+  const userInfo = await this.userInfoRepository.findOne({ where: { student_id: displayName } });
+
+  if (userInfo) {
+      if (!userInfo.user_line_id || userInfo.user_line_id !== userId) {
+          await this.userInfoRepository.update(userInfo.id, { user_line_id: userId });
+      }
+  }
+
+  return `User profile updated successfully for ID: ${userId} to display name: ${displayName}`;
+}
+
 
 
 }
