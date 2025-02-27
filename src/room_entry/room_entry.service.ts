@@ -3,8 +3,7 @@ import { CreateRoomEntryDto } from './dto/create-room_entry.dto';
 import { UpdateRoomEntryDto } from './dto/update-room_entry.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { RoomEntry } from './entities/room_entry.entity';
-
+//import { RoomEntry } from './entities/room_entry.entity';
 @Injectable()
 export class RoomEntryService {
     constructor(
@@ -12,6 +11,6 @@ export class RoomEntryService {
     ) {}
 
     async getAllEntries() {
-        return await this.dataSource.query(`SELECT * FROM room_entry_method`);
+        return await this.dataSource.query(`SELECT * FROM room_entry_method_view`);
     }
 }
