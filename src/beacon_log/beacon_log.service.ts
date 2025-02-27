@@ -1,10 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBeaconEventDto, CreateBeaconLogDto } from './dto/create-beacon_log.dto';
 import { UpdateBeaconLogDto } from './dto/update-beacon_log.dto';
 import { BeaconLog, UserProfile } from './entities/beacon_log.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, IsNull, Not, Repository } from 'typeorm';
 import { RoomStatus } from '../room_status/entities/room_status.entity';
+import { UserInfo } from '../user_info/entities/user_info.entity';
 
 @Injectable()
 export class BeaconLogService {
@@ -15,10 +16,15 @@ export class BeaconLogService {
 
     @InjectRepository(UserProfile)
     private userProfileRepository: Repository<UserProfile>,
+
+    @InjectRepository(RoomStatus)
+    private roomStatusRepository: Repository<RoomStatus>,
+
+    @InjectRepository(UserInfo)
+    private userInfoRepository: Repository<UserInfo>
   ) {}
 
-  @InjectRepository(RoomStatus)
-  private roomStatusRepository: Repository<RoomStatus>;
+  
 
   // async create(createBeaconLogDto: CreateBeaconLogDto): Promise<BeaconLog> {
   //   return await this.beaconLogRepository.save(createBeaconLogDto);
@@ -27,6 +33,37 @@ export class BeaconLogService {
   async GetBeaconLog(): Promise<BeaconLog[]> {
     return await this.beaconLogRepository.find();
   }
+
+  // async GetBeaconByUserId(userId: string): Promise<UserInfo[]> {
+  //   const user = await this.userProfileRepository.findOne({ where: { userid: userId } });
+    
+  //   return await this.userInfoRepository.find({ where: { user_line_id: user.userid } });
+  // }
+
+  async findUserProfileBuUserId(userId: string): Promise<UserProfile> {
+    return await this.userProfileRepository.findOne({ where: { userid: userId } });
+  }
+
+  async findLastedTimeStampByUserIdAndHWid(userId: string, hwid: string): Promise<{ timestamp: Date } | null> {
+    try {
+      const latestBeaconLog = await this.beaconLogRepository.findOne({
+        where: { hwid: hwid, userid: userId },
+        order: { timestamp: 'DESC' },
+      });
+  
+      if (!latestBeaconLog) {
+        throw new NotFoundException('No beacon log found for the given userId and hwid.');
+      }
+  
+      return { timestamp: latestBeaconLog.timestamp };
+    } catch (error) {
+      console.error('Error fetching Timestamp:', error);
+      throw new HttpException(
+        'Failed to find timestamp',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  } 
 
   async GetRooms(): Promise<{ timestamp: Date; room: string | null }[]> {
     try {

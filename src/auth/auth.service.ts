@@ -84,7 +84,4 @@ export class AuthService {
     return this.jwtService.sign(payload);
   }
   
-  getHelloWorld(): string {
-    return 'Hello World!';
-  }
 }
