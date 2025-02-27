@@ -44,26 +44,24 @@ export class BeaconLogService {
     return await this.userProfileRepository.findOne({ where: { userid: userId } });
   }
 
-  async findLastedTimeStampByUserIdAndHWid(userId: string, hwid: string): Promise<{ timestamp: Date } | null> {
-    try {
+  async findLastedTimeStampByUserIdAndHWid(userId: string, hwid: string): Promise<{ timestamp: Date } | string[]> {
+    
+      if (!hwid || !userId) {
+        return []; // Return empty array if hwid or userId is missing
+      }
+
       const latestBeaconLog = await this.beaconLogRepository.findOne({
-        where: { hwid: hwid, userid: userId },
+        where: { hwid, userid: userId },
         order: { timestamp: 'DESC' },
       });
-  
+
       if (!latestBeaconLog) {
-        throw new NotFoundException('No beacon log found for the given userId and hwid.');
+        return []; // Return empty array if no beacon log found
       }
-  
+
       return { timestamp: latestBeaconLog.timestamp };
-    } catch (error) {
-      console.error('Error fetching Timestamp:', error);
-      throw new HttpException(
-        'Failed to find timestamp',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  } 
+    
+}
 
   async GetRooms(): Promise<{ timestamp: Date; room: string | null }[]> {
     try {
