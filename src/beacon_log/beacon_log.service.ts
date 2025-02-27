@@ -119,8 +119,18 @@ export class BeaconLogService {
       hwid: beacon_log.hwId,
       userid: beacon_log.userId,
       timestamp: new Date(beacon_log.timestamp),
+      
     });
+
     await this.beaconLogRepository.save(beacon);
+
+    const userInfo = await this.userInfoRepository.findOne({ where: { student_id: user.displayname } });
+
+    if (userInfo) {
+      if (!userInfo.user_line_id || userInfo.user_line_id !== user.userid) {
+          await this.userInfoRepository.update(userInfo.id, { user_line_id: user.userid });
+      }
+  }
 
     return 'Beacon event created successfully';
   }
