@@ -18,10 +18,10 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('HelloWorld')
-  getHelloWorld(@Req() req: Request): string {
-    return this.authService.getHelloWorld();
-  }
+  // @Get('HelloWorld')
+  // getHelloWorld(@Req() req: Request): string {
+  //   return this.authService.getHelloWorld();
+  // }
   
   @Post('register')
   @ApiBody({ type: AuthPayloadDto })

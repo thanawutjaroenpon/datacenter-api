@@ -21,6 +21,21 @@ export class BeaconLogController {
   async GetAllBeaconLog() {
     return this.beaconLogService.GetBeaconLog();
   }
+  
+  // @Get('GetBeaconByUserId/:userId')
+  // async GetBeaconByUserId(@Param('userId') userId: string) {
+  //   return this.beaconLogService.GetBeaconByUserId(userId);
+  // }
+
+  @Get('findUserProfileBuUserId/:userId')
+  async findUserProfileBuUserId(@Param('userId') userId: string) {
+    return this.beaconLogService.findUserProfileBuUserId(userId);
+  }
+
+  @Get('findLastedTimeStampByUserIdAndHWid/:userId/:hwid')
+  async findLastedTimeStampByUserIdAndHWid(@Param('userId') userId: string, @Param('hwid') hwid: string) {
+    return this.beaconLogService.findLastedTimeStampByUserIdAndHWid(userId, hwid);
+  }
 
   @Get('GetAllRooms')
   async GetAllRooms() {
