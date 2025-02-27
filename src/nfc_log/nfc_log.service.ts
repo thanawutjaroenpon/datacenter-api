@@ -17,8 +17,14 @@ export class NfcLogService {
     ) {}
   
   
-  async create(createNfcLogDto: CreateNfcLogDto): Promise<NfcLog> {
-      const nfcLog = this.nfclogrepository.create(createNfcLogDto);
+    async create(createNfcLogDto: CreateNfcLogDto): Promise<NfcLog> {
+  
+      const nfcLog = this.nfclogrepository.create({
+          ...createNfcLogDto,
+          timestamp: new Date(), 
+      });
+
+  
       return this.nfclogrepository.save(nfcLog);
   }
   async findAll() {
