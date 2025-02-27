@@ -47,15 +47,21 @@ export class NfcLogService {
     return result;
 }
 
-  findOne(id: number) {
-    return `This action returns a #${id} nfcLog`;
-  }
+  async findByNfcTag(nfc_id){
+    const log =  await this.userRepository.find({where:{nfc_id:nfc_id}})
+    return log
 
-  update(id: number, updateNfcLogDto: UpdateNfcLogDto) {
-    return `This action updates a #${id} nfcLog`;
-  }
+}
 
-  remove(id: number) {
-    return `This action removes a #${id} nfcLog`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} nfcLog`;
+  // }
+
+  // update(id: number, updateNfcLogDto: UpdateNfcLogDto) {
+  //   return `This action updates a #${id} nfcLog`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} nfcLog`;
+  // }
 }
